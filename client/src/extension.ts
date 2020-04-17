@@ -42,7 +42,7 @@ export function activate(context: ExtensionContext) {
 
 	// Create the language client and start the client.
 	client = new LanguageClient(
-		'languageServerExample',
+		'autosupport-lsp-vscode',
 		'Language Server Example',
 		serverOptions,
 		clientOptions
