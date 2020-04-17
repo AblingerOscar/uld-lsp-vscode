@@ -3,8 +3,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-import * as path from 'path';
-import { workspace, ExtensionContext } from 'vscode';
+import { workspace, ExtensionContext, DocumentSelector } from 'vscode';
 
 import {
 	LanguageClient,
@@ -16,39 +15,44 @@ import {
 let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
+
 	// The server is implemented in dotnet
 	const serverExe = 'dotnet'
 
 	const serverPath = 'C:/Users/Oscar/Projects/master-thesis/autosupport-lsp-server/autosupport-lsp-server/bin/Release/netcoreapp3.1/autosupport-lsp-server.dll'
-	const descriptionFilePath = 'test1'
+
+	const config = workspace.getConfiguration('autosupport-lsp-vscode')
+	const {
+		languageId,
+		languageScheme,
+		languagePattern,
+		definitionFilePath
+	} = config.get('languageDefinitionFiles')[0]
 
 	// If the extension is launched in debug mode then the debug server options are used
 	// Otherwise the run options are used
 	let serverOptions: ServerOptions = {
 		run: { command: serverExe, args: [ 
-			serverPath, descriptionFilePath, 'test2'
+			serverPath, definitionFilePath, 'test2'
 		] },
 		debug: { command: serverExe, args: [ 
-			serverPath, descriptionFilePath, 'test2'
+			serverPath, definitionFilePath, 'test2'
  		] }
 	}
-
 
 	// Options to control the language client
 	let clientOptions: LanguageClientOptions = {
 		// Register the server for plain text documents
-		documentSelector: [{ scheme: 'file', language: 'plaintext' }],
+		documentSelector: [{ scheme: languageScheme, language: languageId, pattern: languagePattern}],
 	};
 
 	// Create the language client and start the client.
 	client = new LanguageClient(
-		'autosupport-lsp-vscode',
-		'Language Server Example',
+		`autosupport-lsp-vscode-${languageId}`,
+		`Autosupport language server for: ${languageId}`,
 		serverOptions,
 		clientOptions
 	);
-
-	console.log('Client configured… starting server')
 
 	// Start the client. This will also launch the server
 	client.start();
