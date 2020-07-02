@@ -8,10 +8,9 @@
 		"type": "git",
 		"url": "https://github.com/AblingerOscar/autosupport-lsp-vscode"
 	},
-	"publisher": "vscode-samples",
+	"publisher": "AblingerOscar",
 	"categories": [],
 	"keywords": [
-		"multi-root ready"
 	],
 	"engines": {
 		"vscode": "^1.43.0"
