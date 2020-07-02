@@ -3,23 +3,23 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-import { workspace, ExtensionContext, DocumentSelector } from 'vscode';
+import { workspace, ExtensionContext, extensions } from 'vscode';
 
 import {
 	LanguageClient,
 	LanguageClientOptions,
-	ServerOptions,
-	TransportKind
+	ServerOptions
 } from 'vscode-languageclient';
 
 let client: LanguageClient;
+const extensionPath = extensions.getExtension("AblingerOscar.autosupport-lsp-vscode").extensionPath;
 
 export function activate(context: ExtensionContext) {
 
 	// The server is implemented in dotnet
 	const serverExe = 'dotnet'
 
-	const serverPath = 'C:/Users/Oscar/Projects/master-thesis/autosupport-lsp-server/autosupport-lsp-server/bin/Release/netcoreapp3.1/autosupport-lsp-server.dll'
+	const serverPath = extensionPath + '/server/autosupport-lsp-server.dll'
 
 	const config = workspace.getConfiguration('autosupport-lsp-vscode')
 	const {
@@ -33,23 +33,22 @@ export function activate(context: ExtensionContext) {
 	// Otherwise the run options are used
 	let serverOptions: ServerOptions = {
 		run: { command: serverExe, args: [ 
-			serverPath, definitionFilePath, 'test2'
+			serverPath, definitionFilePath
 		] },
 		debug: { command: serverExe, args: [ 
-			serverPath, definitionFilePath, 'test2'
+			serverPath, definitionFilePath
  		] }
 	}
 
 	// Options to control the language client
 	let clientOptions: LanguageClientOptions = {
-		// Register the server for plain text documents
-		documentSelector: [{ scheme: languageScheme, language: languageId, pattern: languagePattern}],
+		documentSelector: [{ scheme: languageScheme, pattern: languagePattern }, { scheme: languageScheme, language: languageId }],
 	};
 
 	// Create the language client and start the client.
 	client = new LanguageClient(
-		`autosupport-lsp-vscode-${languageId}`,
-		`Autosupport language server for: ${languageId}`,
+		`autosupport-lsp-vscode`,
+		`Autosupport language server`,
 		serverOptions,
 		clientOptions
 	);
