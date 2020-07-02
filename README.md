@@ -1,5 +1,26 @@
 # Autosupport LSP VSCode
 
+## How to use this
+
+1. Download the files from a release of the [server](https://github.com/AblingerOscar/autosupport-lsp-server/releases) and unpack them in the server directory of this extension
+2. If the name of the server is different, update it in `client/src/extension.ts` by updating the [`serverPath`](https://github.com/AblingerOscar/autosupport-lsp-vscode/blob/7e5275512c6e43eca64bf3bf630b83b5e7c8a384/client/src/extension.ts#L22) variable accordingly
+3. If you opened the extension folder in vscode, you should be able to simply run the `Launch Client` run configuration (Press Ctrl+Shift+D to switch to the Run Tab)
+4. The first time you start it, the server will fail to start – this is because it does not yet know which definition file to use
+   1. In the settings of the launched visual studio code instance (Ctrl+,) search for `autosupport-lsp-vscode: Language Definition Files` and press `Edit in settings.json`
+   2. Fill out the `languageId`, `languageScheme`, `languagePattern` and `definitionFilePath` properties correctly. If you want to use the examples, it should look like this:
+   ```json
+    "autosupport-lsp-vscode.languageDefinitionFiles": [
+        {
+            "languageId": "cocol-2",
+            "languageScheme": "file",
+            "languagePattern": "**/*.atg",
+            "definitionFilePath": "c:\\Users\\Oscar\\Projects\\master-thesis\\autosupport-lsp-vscode\\examples\\Cocol-2.def"
+        }
+    ],
+   ```
+
+## Disclaimer
+
 Originally started from the template provided by Microsoft found at
 [their Github repository](https://github.com/Microsoft/vscode-extension-samples/tree/master/lsp-sample).
 
