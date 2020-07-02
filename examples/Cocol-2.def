@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languageDefinition name="cocol-2" filePattern="**/*.atg">
+  <comments>
+    <normalComments>
+      <comment>
+        <start>/*</start>
+        <end>*/</end>
+        <treatAs> </treatAs>
+      </comment>
+      <comment>
+        <start>//</start>
+        <end>&#xA;</end>
+        <treatAs>&#xA;</treatAs>
+      </comment>
+    </normalComments>
+    <documentationComments>
+      <comment>
+        <start>/**</start>
+        <end>*/</end>
+        <treatAs> </treatAs>
+      </comment>
+      <comment>
+        <start>///</start>
+        <end>&#xA;</end>
+        <treatAs>&#xA;</treatAs>
+      </comment>
+    </documentationComments>
+  </comments>
+  <startRules>
+    <startRule>S</startRule>
+  </startRules>
+  <rules>
+    <rule name="S">
+      <string>Program</string>
+      <nonTerminal referencedRule="Ws"/>
+      <action>declaration</action>
+      <action>implementation</action>
+      <action>identifierKind set Module</action>
+      <action>identifierType set Program</action>
+      <nonTerminal referencedRule="Identifier"/>
+      <nonTerminal referencedRule="Ws" />
+      <nonTerminal referencedRule="S$1"/>
+    </rule>
+    <rule name="S$1">
+      <oneOf allowNone="true">
+        <option>S$2</option>
+        <option>S$3</option>
+      </oneOf>
+    </rule>
+    <rule name="S$2">
+      <nonTerminal referencedRule="VarDecl"/>
+      <nonTerminal referencedRule="OptionalWs"/>
+      <nonTerminal referencedRule="S$1"/>
+    </rule>
+    <rule name="S$3">
+      <nonTerminal referencedRule="PrintStatement"/>
+      <nonTerminal referencedRule="OptionalWs"/>
+      <nonTerminal referencedRule="S$1"/>
+    </rule>
+    <rule name="VarDecl">
+      <string>var</string>
+      <nonTerminal referencedRule="Ws" />
+      <action>declaration</action>
+      <action>implementation</action>
+      <action>identifierKind set Variable</action>
+      <action>identifierType set Variable</action>
+      <nonTerminal referencedRule="Identifier" />
+      <nonTerminal referencedRule="OptionalWs"/>
+      <string>=</string>
+      <nonTerminal referencedRule="OptionalWs"/>
+      <nonTerminal referencedRule="Number"/>
+      <nonTerminal referencedRule="OptionalWs" />
+      <string>;</string>
+    </rule>
+    <rule name="PrintStatement">
+      <action>identifierKind set Variable</action>
+      <action>identifierType set Variable</action>
+      <nonTerminal referencedRule="Identifier" />
+      <nonTerminal referencedRule="Ws" />
+      <string>print</string>
+      <nonTerminal referencedRule="OptionalWs"/>
+      <string>;</string>
+    </rule>
+    <rule name="OptionalWs">
+      <oneOf allowNone="true">
+        <option>Ws</option>
+      </oneOf>
+    </rule>
+    <rule name="Ws">
+      <whitespace />
+      <oneOf allowNone="true">
+        <option>Ws</option>
+      </oneOf>
+    </rule>
+    <rule name="Identifier">
+      <action>identifier</action>
+      <letter />
+      <oneOf allowNone="true">
+        <option>Identifier$1</option>
+      </oneOf>
+      <action>identifier</action>
+    </rule>
+    <rule name="Identifier$1">
+      <letterOrDigit />
+      <oneOf allowNone="true">
+        <option>Identifier$1</option>
+      </oneOf>
+    </rule>
+    <rule name="Number">
+      <digit />
+      <oneOf allowNone="true">
+        <option>Number</option>
+      </oneOf>
+    </rule>
+  </rules>
+</languageDefinition>

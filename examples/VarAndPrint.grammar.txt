@@ -1,0 +1,11 @@
+S -> "Program" Ws Identifier Ws (VarDecl OptionalWs | PrintStatement OptionalWs)+ .
+VarDecl -> "var" Ws Identifier OptionalWs "=" OptionalWs Number OptionalWs ";" .
+PrintStatement -> Identifier Ws "print" OptionalWs ";" .
+
+Ws -> _whitespace_ OptionalWs . 
+OptionalWs -> _whitespace_* .
+
+/** Identifier **/
+Identifier -> _letter_ _letterOrDigit_* .
+
+Number -> _digit_+ .
