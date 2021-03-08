@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<languageDefinition p1:name="Cocol-2" p1:filePattern="**/*.atg" p1:version="v1.0.0" xmlns:p1="https://github.com/AblingerOscar/autosupport-definition" xmlns="https://github.com/AblingerOscar/autosupport-definition">
+  <p1:comments>
+    <p1:normalComments />
+    <p1:documentationComments>
+      <p1:comment>
+        <p1:start>//</p1:start>
+        <p1:end>
+</p1:end>
+        <p1:treatAs> </p1:treatAs>
+      </p1:comment>
+      <p1:comment>
+        <p1:start>/*</p1:start>
+        <p1:end>*/</p1:end>
+        <p1:treatAs> </p1:treatAs>
+      </p1:comment>
+      <p1:comment>
+        <p1:start>(*</p1:start>
+        <p1:end>*)</p1:end>
+        <p1:treatAs> </p1:treatAs>
+      </p1:comment>
+      <p1:comment>
+        <p1:start>&lt;&lt;</p1:start>
+        <p1:end>&gt;&gt;</p1:end>
+        <p1:treatAs> </p1:treatAs>
+      </p1:comment>
+      <p1:comment>
+        <p1:start>^^</p1:start>
+        <p1:end>
+</p1:end>
+        <p1:treatAs> </p1:treatAs>
+      </p1:comment>
+    </p1:documentationComments>
+  </p1:comments>
+  <p1:startRules>
+    <p1:startRule>Cocol2</p1:startRule>
+  </p1:startRules>
+  <p1:rules>
+    <p1:rule p1:name="$$ws">
+      <p1:whitespace />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="$$any_uppercase">
+      <p1:uppercaseLetter />
+    </p1:rule>
+    <p1:rule p1:name="$$any_lowercase">
+      <p1:lowercaseLetter />
+    </p1:rule>
+    <p1:rule p1:name="letter">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>$$any_uppercase</p1:option>
+        <p1:option>$$any_lowercase</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="digit">
+      <p1:characterOf>0123456789</p1:characterOf>
+    </p1:rule>
+    <p1:rule p1:name="$$any_lineEnd">
+      <p1:lineEnd />
+    </p1:rule>
+    <p1:rule p1:name="control|0">
+      <p1:characterOf>	</p1:characterOf>
+    </p1:rule>
+    <p1:rule p1:name="control">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>$$any_lineEnd</p1:option>
+        <p1:option>$$any_lineEnd</p1:option>
+        <p1:option>control|0</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="noQuote1">
+      <p1:characterExcept>'	
+
+</p1:characterExcept>
+    </p1:rule>
+    <p1:rule p1:name="noQuote2">
+      <p1:characterExcept>"	
+
+</p1:characterExcept>
+    </p1:rule>
+    <p1:rule p1:name="ignore|0">
+      <p1:characterOf>	</p1:characterOf>
+    </p1:rule>
+    <p1:rule p1:name="ignore">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>$$any_lineEnd</p1:option>
+        <p1:option>ignore|0</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="ident|0_1$zeroOrMore|0">
+      <p1:nonTerminal p1:referencedRule="letter" />
+    </p1:rule>
+    <p1:rule p1:name="ident|0_1$zeroOrMore|1">
+      <p1:nonTerminal p1:referencedRule="digit" />
+    </p1:rule>
+    <p1:rule p1:name="ident|0_1$zeroOrMore">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>ident|0_1$zeroOrMore|0</p1:option>
+        <p1:option>ident|0_1$zeroOrMore|1</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>ident|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="ident">
+      <p1:action>identifier</p1:action>
+      <p1:nonTerminal p1:referencedRule="letter" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>ident|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>identifier</p1:action>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+    </p1:rule>
+    <p1:rule p1:name="str|0_0$inner|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="noQuote1" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>str|0_0$inner|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="str|0_0$inner|1_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="noQuote2" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>str|0_0$inner|1_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="str|0_0$inner|0">
+      <p1:string>'</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>str|0_0$inner|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:string>'</p1:string>
+    </p1:rule>
+    <p1:rule p1:name="str|0_0$inner|1">
+      <p1:string>"</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>str|0_0$inner|1_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:string>"</p1:string>
+    </p1:rule>
+    <p1:rule p1:name="str|0_0$inner">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>str|0_0$inner|0</p1:option>
+        <p1:option>str|0_0$inner|1</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="str">
+      <p1:nonTerminal p1:referencedRule="str|0_0$inner" />
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+    </p1:rule>
+    <p1:rule p1:name="num|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="digit" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>num|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="num">
+      <p1:nonTerminal p1:referencedRule="digit" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>num|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_2$optional">
+      <p1:string>LEX</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_3$optional">
+      <p1:string>SYN</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_4$optional">
+      <p1:string>SEM</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_5$optional">
+      <p1:string>IGNORE</p1:string>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:string>CASE</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_6$optional|0_2$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="SetDecl" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_6$optional|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_6$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>CHARACTER</p1:string>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:string>SETS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_6$optional|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_7$optional|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="CommentDecl" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_7$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_7$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>COMMENTS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_7$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_8$optional|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="KeywordDecl" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_8$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_8$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>KEYWORDS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_8$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_9$optional|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="TokenDecl" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_9$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_9$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>TOKENS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_9$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_10$optional|0_2$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="TokenClassDecl" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_10$optional|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_10$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>TOKEN</p1:string>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:string>CLASSES</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_10$optional|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_11$optional|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="PragmaDecl" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_11$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_11$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>PRAGMAS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_11$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_12$optional|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="NonterminalDecl" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_12$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_12$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>NONTERMINALS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_12$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_13$optional|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="RuleDef" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_13$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2|0_13$optional">
+      <p1:action>folding start</p1:action>
+      <p1:string>RULES</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_13$optional|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="Cocol2">
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:action>folding start</p1:action>
+      <p1:string>COMPILER</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:action>identifierType set startRule</p1:action>
+      <p1:action>declaration</p1:action>
+      <!--<p1:action>environment push inner</p1:action>-->
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <!--<p1:action>environment push inner</p1:action>-->
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_2$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_3$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_4$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_5$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_6$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_7$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_8$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_9$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_10$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_11$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_12$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Cocol2|0_13$optional</p1:option>
+      </p1:oneOf>
+      <p1:action>identifierType set startRule</p1:action>
+      <p1:string>END</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="SetDecl|0_3$zeroOrMore|0_0$inner|0">
+      <p1:string>+</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SetDecl|0_3$zeroOrMore|0_0$inner|1">
+      <p1:string>-</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SetDecl|0_3$zeroOrMore|0_0$inner">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>SetDecl|0_3$zeroOrMore|0_0$inner|0</p1:option>
+        <p1:option>SetDecl|0_3$zeroOrMore|0_0$inner|1</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SetDecl|0_3$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="SetDecl|0_3$zeroOrMore|0_0$inner" />
+      <p1:nonTerminal p1:referencedRule="ChrSet" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SetDecl|0_3$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SetDecl|0_4$optional">
+      <p1:string>IGNORE</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SetDecl">
+      <p1:action>identifierType set charSet</p1:action>
+      <p1:action>declaration</p1:action>
+      <p1:action>definition</p1:action>
+      <p1:action>implementation</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:string>=</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="ChrSet" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SetDecl|0_3$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SetDecl|0_4$optional</p1:option>
+      </p1:oneOf>
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="ChrSet|0">
+      <p1:action>identifierType set charSet</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+    </p1:rule>
+    <p1:rule p1:name="ChrSet|1">
+      <p1:string>ANY</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="ChrSet|2">
+      <p1:string>EOL</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="ChrSet|3_1$optional">
+      <p1:string>..</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="Special" />
+    </p1:rule>
+    <p1:rule p1:name="ChrSet|3">
+      <p1:nonTerminal p1:referencedRule="Special" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>ChrSet|3_1$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="ChrSet">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>ChrSet|0</p1:option>
+        <p1:option>ChrSet|1</p1:option>
+        <p1:option>ChrSet|2</p1:option>
+        <p1:option>ChrSet|3</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Special|0">
+      <p1:nonTerminal p1:referencedRule="str" />
+    </p1:rule>
+    <p1:rule p1:name="Special|1">
+      <p1:string>CHR</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:string>(</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="num" />
+      <p1:string>)</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Special">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>Special|0</p1:option>
+        <p1:option>Special|1</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="CommentDecl|0_4$optional">
+      <p1:string>NESTED</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="CommentDecl|0_5$optional">
+      <p1:string>HANDLER</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="ident" />
+    </p1:rule>
+    <p1:rule p1:name="CommentDecl">
+      <p1:string>FROM</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="Delimiter" />
+      <p1:string>TO</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="Delimiter" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>CommentDecl|0_4$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>CommentDecl|0_5$optional</p1:option>
+      </p1:oneOf>
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="Delimiter|0_1$optional">
+      <p1:nonTerminal p1:referencedRule="DelimiterPart" />
+    </p1:rule>
+    <p1:rule p1:name="Delimiter">
+      <p1:nonTerminal p1:referencedRule="DelimiterPart" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>Delimiter|0_1$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="DelimiterPart|0">
+      <p1:nonTerminal p1:referencedRule="str" />
+    </p1:rule>
+    <p1:rule p1:name="DelimiterPart|1">
+      <p1:action>identifierType set charSet</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+    </p1:rule>
+    <p1:rule p1:name="DelimiterPart|2">
+      <p1:string>CHR</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:string>(</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="num" />
+      <p1:string>)</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="DelimiterPart|3">
+      <p1:string>EOL</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="DelimiterPart">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>DelimiterPart|0</p1:option>
+        <p1:option>DelimiterPart|1</p1:option>
+        <p1:option>DelimiterPart|2</p1:option>
+        <p1:option>DelimiterPart|3</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl|0_0$inner|0_1$optional">
+      <p1:nonTerminal p1:referencedRule="AliasName" />
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl|0_0$inner|0_2$optional|0_2$zeroOrMore">
+      <p1:string>|</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="str" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>KeywordDecl|0_0$inner|0_2$optional|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl|0_0$inner|0_2$optional">
+      <p1:string>=</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="str" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>KeywordDecl|0_0$inner|0_2$optional|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl|0_0$inner|1_1$optional">
+      <p1:nonTerminal p1:referencedRule="AliasName" />
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl|0_0$inner|0">
+      <p1:action>identifierType set nonTerminal</p1:action>
+      <p1:action>declaration</p1:action>
+      <p1:action>definition</p1:action>
+      <p1:action>implementation</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>KeywordDecl|0_0$inner|0_1$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>KeywordDecl|0_0$inner|0_2$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl|0_0$inner|1">
+      <p1:nonTerminal p1:referencedRule="str" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>KeywordDecl|0_0$inner|1_1$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl|0_0$inner">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>KeywordDecl|0_0$inner|0</p1:option>
+        <p1:option>KeywordDecl|0_0$inner|1</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="KeywordDecl">
+      <p1:nonTerminal p1:referencedRule="KeywordDecl|0_0$inner" />
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="TokenDecl|0_0$inner|0_1$optional">
+      <p1:nonTerminal p1:referencedRule="AliasName" />
+    </p1:rule>
+    <p1:rule p1:name="TokenDecl|0_0$inner|0_2$optional">
+      <p1:string>=</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexExpr" />
+    </p1:rule>
+    <p1:rule p1:name="TokenDecl|0_0$inner|1_1$optional">
+      <p1:nonTerminal p1:referencedRule="AliasName" />
+    </p1:rule>
+    <p1:rule p1:name="TokenDecl|0_0$inner|0">
+      <p1:action>identifierType set nonTerminal</p1:action>
+      <p1:action>declaration</p1:action>
+      <p1:action>definition</p1:action>
+      <p1:action>implementation</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>TokenDecl|0_0$inner|0_1$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>TokenDecl|0_0$inner|0_2$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="TokenDecl|0_0$inner|1">
+      <p1:nonTerminal p1:referencedRule="str" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>TokenDecl|0_0$inner|1_1$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="TokenDecl|0_0$inner">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>TokenDecl|0_0$inner|0</p1:option>
+        <p1:option>TokenDecl|0_0$inner|1</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="TokenDecl">
+      <p1:nonTerminal p1:referencedRule="TokenDecl|0_0$inner" />
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="TokenClassDecl|0_1$optional">
+      <p1:nonTerminal p1:referencedRule="AliasName" />
+    </p1:rule>
+    <p1:rule p1:name="TokenClassDecl|0_2$optional|0_2$optional">
+      <p1:nonTerminal p1:referencedRule="LexDecl" />
+    </p1:rule>
+    <p1:rule p1:name="TokenClassDecl|0_2$optional|0_3$optional">
+      <p1:nonTerminal p1:referencedRule="LexAction" />
+    </p1:rule>
+    <p1:rule p1:name="TokenClassDecl|0_2$optional">
+      <p1:string>=</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexExpr" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>TokenClassDecl|0_2$optional|0_2$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>TokenClassDecl|0_2$optional|0_3$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="TokenClassDecl">
+      <p1:action>identifierType set nonTerminal</p1:action>
+      <p1:action>declaration</p1:action>
+      <p1:action>definition</p1:action>
+      <p1:action>implementation</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>TokenClassDecl|0_1$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>TokenClassDecl|0_2$optional</p1:option>
+      </p1:oneOf>
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="PragmaDecl|0_1$optional|0_2$optional">
+      <p1:nonTerminal p1:referencedRule="LexDecl" />
+    </p1:rule>
+    <p1:rule p1:name="PragmaDecl|0_1$optional|0_3$optional">
+      <p1:nonTerminal p1:referencedRule="LexAction" />
+    </p1:rule>
+    <p1:rule p1:name="PragmaDecl|0_1$optional">
+      <p1:string>=</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexExpr" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>PragmaDecl|0_1$optional|0_2$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>PragmaDecl|0_1$optional|0_3$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="PragmaDecl|0_2$optional">
+      <p1:nonTerminal p1:referencedRule="SemDecl" />
+    </p1:rule>
+    <p1:rule p1:name="PragmaDecl|0_3$optional">
+      <p1:nonTerminal p1:referencedRule="SemAction" />
+    </p1:rule>
+    <p1:rule p1:name="PragmaDecl">
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>PragmaDecl|0_1$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>PragmaDecl|0_2$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>PragmaDecl|0_3$optional</p1:option>
+      </p1:oneOf>
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="NonterminalDecl|0_1$optional">
+      <p1:nonTerminal p1:referencedRule="AliasName" />
+    </p1:rule>
+    <p1:rule p1:name="NonterminalDecl">
+      <p1:action>identifierType set nonTerminal</p1:action>
+      <p1:action>declaration</p1:action>
+      <p1:action>definition</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>NonterminalDecl|0_1$optional</p1:option>
+      </p1:oneOf>
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="AliasName|0_1$inner|0">
+      <p1:action>identifierType set nonTerminal</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+    </p1:rule>
+    <p1:rule p1:name="AliasName|0_1$inner|1">
+      <p1:nonTerminal p1:referencedRule="str" />
+    </p1:rule>
+    <p1:rule p1:name="AliasName|0_1$inner">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>AliasName|0_1$inner|0</p1:option>
+        <p1:option>AliasName|0_1$inner|1</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="AliasName">
+      <p1:string>ALIAS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="AliasName|0_1$inner" />
+    </p1:rule>
+    <p1:rule p1:name="LexExpr|0_1$zeroOrMore">
+      <p1:string>|</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexTerm" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>LexExpr|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexExpr">
+      <p1:nonTerminal p1:referencedRule="LexTerm" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>LexExpr|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexTerm|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="LexFact" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>LexTerm|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexTerm|0_2$optional">
+      <p1:string>IF</p1:string>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:string>FOLLOWED</p1:string>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:string>BY</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:string>(</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexExpr" />
+      <p1:string>)</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexTerm">
+      <p1:nonTerminal p1:referencedRule="LexFact" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>LexTerm|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>LexTerm|0_2$optional</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexFact|0">
+      <p1:action>identifierType set charSet</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+    </p1:rule>
+    <p1:rule p1:name="LexFact|1">
+      <p1:nonTerminal p1:referencedRule="str" />
+    </p1:rule>
+    <p1:rule p1:name="LexFact|2">
+      <p1:string>CHR</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:string>(</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="num" />
+      <p1:string>)</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexFact|3">
+      <p1:string>EOL</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexFact|4">
+      <p1:string>(</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexExpr" />
+      <p1:string>)</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexFact|5">
+      <p1:string>[</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexExpr" />
+      <p1:string>]</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexFact|6">
+      <p1:string>{</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="LexExpr" />
+      <p1:string>}</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexFact">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>LexFact|0</p1:option>
+        <p1:option>LexFact|1</p1:option>
+        <p1:option>LexFact|2</p1:option>
+        <p1:option>LexFact|3</p1:option>
+        <p1:option>LexFact|4</p1:option>
+        <p1:option>LexFact|5</p1:option>
+        <p1:option>LexFact|6</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="RuleDef|0_2$optional">
+      <p1:nonTerminal p1:referencedRule="SemDecl" />
+    </p1:rule>
+    <p1:rule p1:name="RuleDef|0_3$optional">
+      <p1:nonTerminal p1:referencedRule="PreAction" />
+    </p1:rule>
+    <p1:rule p1:name="RuleDef|0_4$optional">
+      <p1:nonTerminal p1:referencedRule="PostAction" />
+    </p1:rule>
+    <p1:rule p1:name="RuleDef">
+      <p1:action>folding start</p1:action>
+      <p1:action>identifierType set nonTerminal</p1:action>
+      <p1:action>implementation</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+      <p1:string>=</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>RuleDef|0_2$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>RuleDef|0_3$optional</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>RuleDef|0_4$optional</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="SynExpr" />
+      <p1:string>.</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:action>folding end</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="SynExpr|0_1$zeroOrMore">
+      <p1:string>|</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="SynTerm" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SynExpr|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynExpr">
+      <p1:nonTerminal p1:referencedRule="SynTerm" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SynExpr|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynTerm|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="SynFact" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SynTerm|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynTerm">
+      <p1:nonTerminal p1:referencedRule="SynFact" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SynTerm|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|0">
+      <p1:action>identifierType set nonTerminal</p1:action>
+      <p1:nonTerminal p1:referencedRule="ident" />
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|1">
+      <p1:nonTerminal p1:referencedRule="str" />
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|2_0$inner|0">
+      <p1:nonTerminal p1:referencedRule="SynAction" />
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|2_0$inner|1">
+      <p1:nonTerminal p1:referencedRule="SemAction" />
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|2_0$inner">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>SynFact|0_0$inner|2_0$inner|0</p1:option>
+        <p1:option>SynFact|0_0$inner|2_0$inner|1</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|2">
+      <p1:nonTerminal p1:referencedRule="SynFact|0_0$inner|2_0$inner" />
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|3">
+      <p1:string>(</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="SynExpr" />
+      <p1:string>)</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|4">
+      <p1:string>[</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="SynExpr" />
+      <p1:string>]</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|5">
+      <p1:string>{</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="SynExpr" />
+      <p1:string>}</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|6">
+      <p1:string>EPS</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner|7">
+      <p1:string>ANY</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact|0_0$inner">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>SynFact|0_0$inner|0</p1:option>
+        <p1:option>SynFact|0_0$inner|1</p1:option>
+        <p1:option>SynFact|0_0$inner|2</p1:option>
+        <p1:option>SynFact|0_0$inner|3</p1:option>
+        <p1:option>SynFact|0_0$inner|4</p1:option>
+        <p1:option>SynFact|0_0$inner|5</p1:option>
+        <p1:option>SynFact|0_0$inner|6</p1:option>
+        <p1:option>SynFact|0_0$inner|7</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynFact">
+      <p1:nonTerminal p1:referencedRule="SynFact|0_0$inner" />
+    </p1:rule>
+    <p1:rule p1:name="LexDecl">
+      <p1:string>LEXLOCAL</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="LexAction">
+      <p1:string>LEX</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SemDecl">
+      <p1:string>LOCAL</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SynAction">
+      <p1:string>SYN</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SemAction">
+      <p1:string>SEM</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="PreAction">
+      <p1:string>PRE</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="PostAction">
+      <p1:string>POST</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+  </p1:rules>
+</languageDefinition>

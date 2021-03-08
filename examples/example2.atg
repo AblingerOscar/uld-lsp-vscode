@@ -1,0 +1,23 @@
+COMPILER Example
+
+CHARACTER SETS
+    letter = 'A' .. 'Z' + 'a' .. 'z' .
+
+COMMENTS
+    FROM '#' TO EOL .
+
+KEYWORDS
+    'BOOL' .        'STRING' .
+
+TOKENS
+    '=' .           ';' .
+
+TOKEN CLASSES
+    ident = letter { letter }.
+
+NONTERMINALS
+    Assignment .   Example .
+
+RULES
+    Example = { Assignment digit } .
+    Assignment = 

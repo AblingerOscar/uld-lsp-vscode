@@ -1,0 +1,6 @@
+Program prog1
+
+var iden1 = 121;
+iden1 print;
+
+

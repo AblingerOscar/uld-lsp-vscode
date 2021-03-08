@@ -1,116 +1,146 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<languageDefinition name="cocol-2" filePattern="**/*.atg">
-  <comments>
-    <normalComments>
-      <comment>
-        <start>/*</start>
-        <end>*/</end>
-        <treatAs> </treatAs>
-      </comment>
-      <comment>
-        <start>//</start>
-        <end>&#xA;</end>
-        <treatAs>&#xA;</treatAs>
-      </comment>
-    </normalComments>
-    <documentationComments>
-      <comment>
-        <start>/**</start>
-        <end>*/</end>
-        <treatAs> </treatAs>
-      </comment>
-      <comment>
-        <start>///</start>
-        <end>&#xA;</end>
-        <treatAs>&#xA;</treatAs>
-      </comment>
-    </documentationComments>
-  </comments>
-  <startRules>
-    <startRule>S</startRule>
-  </startRules>
-  <rules>
-    <rule name="S">
-      <string>Program</string>
-      <nonTerminal referencedRule="Ws"/>
-      <action>declaration</action>
-      <action>implementation</action>
-      <action>identifierKind set Module</action>
-      <action>identifierType set Program</action>
-      <nonTerminal referencedRule="Identifier"/>
-      <nonTerminal referencedRule="Ws" />
-      <nonTerminal referencedRule="S$1"/>
-    </rule>
-    <rule name="S$1">
-      <oneOf allowNone="true">
-        <option>S$2</option>
-        <option>S$3</option>
-      </oneOf>
-    </rule>
-    <rule name="S$2">
-      <nonTerminal referencedRule="VarDecl"/>
-      <nonTerminal referencedRule="OptionalWs"/>
-      <nonTerminal referencedRule="S$1"/>
-    </rule>
-    <rule name="S$3">
-      <nonTerminal referencedRule="PrintStatement"/>
-      <nonTerminal referencedRule="OptionalWs"/>
-      <nonTerminal referencedRule="S$1"/>
-    </rule>
-    <rule name="VarDecl">
-      <string>var</string>
-      <nonTerminal referencedRule="Ws" />
-      <action>declaration</action>
-      <action>implementation</action>
-      <action>identifierKind set Variable</action>
-      <action>identifierType set Variable</action>
-      <nonTerminal referencedRule="Identifier" />
-      <nonTerminal referencedRule="OptionalWs"/>
-      <string>=</string>
-      <nonTerminal referencedRule="OptionalWs"/>
-      <nonTerminal referencedRule="Number"/>
-      <nonTerminal referencedRule="OptionalWs" />
-      <string>;</string>
-    </rule>
-    <rule name="PrintStatement">
-      <action>identifierKind set Variable</action>
-      <action>identifierType set Variable</action>
-      <nonTerminal referencedRule="Identifier" />
-      <nonTerminal referencedRule="Ws" />
-      <string>print</string>
-      <nonTerminal referencedRule="OptionalWs"/>
-      <string>;</string>
-    </rule>
-    <rule name="OptionalWs">
-      <oneOf allowNone="true">
-        <option>Ws</option>
-      </oneOf>
-    </rule>
-    <rule name="Ws">
-      <whitespace />
-      <oneOf allowNone="true">
-        <option>Ws</option>
-      </oneOf>
-    </rule>
-    <rule name="Identifier">
-      <action>identifier</action>
-      <letter />
-      <oneOf allowNone="true">
-        <option>Identifier$1</option>
-      </oneOf>
-      <action>identifier</action>
-    </rule>
-    <rule name="Identifier$1">
-      <letterOrDigit />
-      <oneOf allowNone="true">
-        <option>Identifier$1</option>
-      </oneOf>
-    </rule>
-    <rule name="Number">
-      <digit />
-      <oneOf allowNone="true">
-        <option>Number</option>
-      </oneOf>
-    </rule>
-  </rules>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<languageDefinition p1:name="SimpleGrammar" p1:filePattern="**/*.atg" p1:version="v1.0.0" xmlns:p1="https://github.com/AblingerOscar/autosupport-definition" xmlns="https://github.com/AblingerOscar/autosupport-definition">
+  <p1:comments>
+    <p1:normalComments />
+    <p1:documentationComments>
+      <p1:comment>
+        <p1:start>/*</p1:start>
+        <p1:end>*/</p1:end>
+        <p1:treatAs> </p1:treatAs>
+      </p1:comment>
+    </p1:documentationComments>
+  </p1:comments>
+  <p1:startRules>
+    <p1:startRule>SimpleGrammar</p1:startRule>
+  </p1:startRules>
+  <p1:rules>
+    <p1:rule p1:name="$$ws">
+      <p1:whitespace />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="$$any_uppercase">
+      <p1:uppercaseLetter />
+    </p1:rule>
+    <p1:rule p1:name="$$any_lowercase">
+      <p1:lowercaseLetter />
+    </p1:rule>
+    <p1:rule p1:name="letter">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>$$any_uppercase</p1:option>
+        <p1:option>$$any_lowercase</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="digit">
+      <p1:characterOf>0123456789</p1:characterOf>
+    </p1:rule>
+    <p1:rule p1:name="identifier|0_1$zeroOrMore|0">
+      <p1:nonTerminal p1:referencedRule="letter" />
+    </p1:rule>
+    <p1:rule p1:name="identifier|0_1$zeroOrMore|1">
+      <p1:nonTerminal p1:referencedRule="digit" />
+    </p1:rule>
+    <p1:rule p1:name="identifier|0_1$zeroOrMore">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>identifier|0_1$zeroOrMore|0</p1:option>
+        <p1:option>identifier|0_1$zeroOrMore|1</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>identifier|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="identifier">
+      <p1:action>identifier</p1:action>
+      <p1:nonTerminal p1:referencedRule="letter" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>identifier|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:action>identifier</p1:action>
+    </p1:rule>
+    <p1:rule p1:name="number|0_1$zeroOrMore">
+      <p1:nonTerminal p1:referencedRule="digit" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>number|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="number">
+      <p1:nonTerminal p1:referencedRule="digit" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>number|0_1$zeroOrMore</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SimpleGrammar|0_2$zeroOrMore|0">
+      <p1:nonTerminal p1:referencedRule="VarDecl" />
+    </p1:rule>
+    <p1:rule p1:name="SimpleGrammar|0_2$zeroOrMore|1">
+      <p1:nonTerminal p1:referencedRule="VarPrint" />
+    </p1:rule>
+    <p1:rule p1:name="SimpleGrammar|0_2$zeroOrMore">
+      <p1:oneOf p1:allowNone="false">
+        <p1:option>SimpleGrammar|0_2$zeroOrMore|0</p1:option>
+        <p1:option>SimpleGrammar|0_2$zeroOrMore|1</p1:option>
+      </p1:oneOf>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SimpleGrammar|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="SimpleGrammar">
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:string>Program</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:action>identifierKind set Module</p1:action>
+      <p1:action>identifierType set Module</p1:action>
+      <p1:action>declaration</p1:action>
+      <p1:action>definition</p1:action>
+      <p1:action>implementation</p1:action>
+      <p1:nonTerminal p1:referencedRule="identifier" />
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>SimpleGrammar|0_2$zeroOrMore</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="VarDecl">
+      <p1:string>var</p1:string>
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:action>identifierKind set Variable</p1:action>
+      <p1:action>identifierType set Number</p1:action>
+      <p1:action>declaration</p1:action>
+      <p1:action>definition</p1:action>
+      <p1:nonTerminal p1:referencedRule="identifier" />
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:string>=</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:nonTerminal p1:referencedRule="number" />
+      <p1:string>;</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+    <p1:rule p1:name="VarPrint">
+      <p1:action>identifierKind set Variable</p1:action>
+      <p1:action>identifierType set Number</p1:action>
+      <p1:nonTerminal p1:referencedRule="identifier" />
+      <p1:nonTerminal p1:referencedRule="$$ws" />
+      <p1:string>print</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+      <p1:string>;</p1:string>
+      <p1:oneOf p1:allowNone="true">
+        <p1:option>$$ws</p1:option>
+      </p1:oneOf>
+    </p1:rule>
+  </p1:rules>
 </languageDefinition>
