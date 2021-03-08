@@ -10,8 +10,7 @@
 	},
 	"publisher": "AblingerOscar",
 	"categories": [],
-	"keywords": [
-	],
+	"keywords": [],
 	"engines": {
 		"vscode": "^1.43.0"
 	},
@@ -24,32 +23,18 @@
 			"type": "object",
 			"title": "Autosupport",
 			"properties": {
-				"autosupport-lsp-vscode.languageDefinitionFiles": {
+				"autosupport-lsp-vscode.definitionFilePath": {
 					"scope": "machine-overridable",
-					"type": "array",
-					"items": {
-						"type": "object",
-						"title": "Language Definition File",
-						"properties": {
-							"languageId": {
-								"type": "string",
-								"description": "Usually the name of the language in lower case with no spaces"
-							},
-							"languageScheme": {
-								"type": "string",
-								"markdownDescription": "A [Uri scheme](https://code.visualstudio.com/api/references/vscode-api#Uri.scheme), like `file` or `untitled`."
-							},
-							"languagePattern": {
-								"type": "string",
-								"markdownDescription": "A [glob pattern](https://code.visualstudio.com/api/references/vscode-api#GlobPattern), like `*.{ts,js}`."
-							},
-							"definitionFilePath": {
-								"type": "string",
-								"description": "Absolute path to the definition file for this language"
-							}
-						}
-					},
-					"description": "Describes the paths to language definition files (Note: currently only one is supported – the first entry will be taken)"
+					"type": "string",
+					"title": "Language Definition File path",
+					"description": "Path to language definition file for the generic language server"
+				},
+				"autosupport-lsp-vscode.languageScheme": {
+					"scope": "machine-overridable",
+					"type": "string",
+					"title": "Language Definition File scheme",
+					"markdownDescription": "The [Uri scheme](https://code.visualstudio.com/api/references/vscode-api#Uri.scheme), like `file` or `untitled`.",
+					"default": "file"
 				}
 			}
 		}
@@ -68,5 +53,8 @@
 		"eslint": "^6.4.0",
 		"@typescript-eslint/parser": "^2.3.0",
 		"typescript": "^3.8.3"
+	},
+	"dependencies": {
+		"xml2js": "^0.4.23"
 	}
 }

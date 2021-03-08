@@ -3,13 +3,14 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-import { workspace, ExtensionContext, extensions } from 'vscode';
-
+import fs = require('fs');
+import { workspace, ExtensionContext, extensions } from 'vscode'
 import {
 	LanguageClient,
 	LanguageClientOptions,
 	ServerOptions
-} from 'vscode-languageclient';
+} from 'vscode-languageclient'
+import { parseString } from 'xml2js'
 
 let client: LanguageClient;
 const extensionPath = extensions.getExtension("AblingerOscar.autosupport-lsp-vscode").extensionPath;
@@ -18,43 +19,46 @@ export function activate(context: ExtensionContext) {
 
 	// The server is implemented in dotnet
 	const serverExe = 'dotnet'
-
+	
 	const serverPath = extensionPath + '/server/autosupport-lsp-server.dll'
 
 	const config = workspace.getConfiguration('autosupport-lsp-vscode')
-	const {
-		languageId,
-		languageScheme,
-		languagePattern,
-		definitionFilePath
-	} = config.get('languageDefinitionFiles')[0]
+	const definitionFilePath: string = config.get('definitionFilePath')
+	const languageScheme: string = config.get('languageScheme')
 
-	// If the extension is launched in debug mode then the debug server options are used
-	// Otherwise the run options are used
-	let serverOptions: ServerOptions = {
-		run: { command: serverExe, args: [ 
-			serverPath, definitionFilePath
-		] },
-		debug: { command: serverExe, args: [ 
-			serverPath, definitionFilePath
- 		] }
-	}
+	fs.readFile(definitionFilePath, { encoding: "utf-8" }, (err, data) => {
+		parseString(data, (_, langDef) => {
+			const languageId = langDef.languageDefinition.$.name
+			const languagePattern = langDef.languageDefinition.$.filePattern
 
-	// Options to control the language client
-	let clientOptions: LanguageClientOptions = {
-		documentSelector: [{ scheme: languageScheme, pattern: languagePattern }, { scheme: languageScheme, language: languageId }],
-	};
+			// If the extension is launched in debug mode then the debug server options are used
+			// Otherwise the run options are used
+			let serverOptions: ServerOptions = {
+				run: { command: serverExe, args: [ 
+					serverPath, definitionFilePath
+				] },
+				debug: { command: serverExe, args: [ 
+					serverPath, definitionFilePath
+				] }
+			}
 
-	// Create the language client and start the client.
-	client = new LanguageClient(
-		`autosupport-lsp-vscode`,
-		`Autosupport language server`,
-		serverOptions,
-		clientOptions
-	);
+			// Options to control the language client
+			const clientOptions: LanguageClientOptions = {
+				documentSelector: [{ scheme: languageScheme, pattern: languagePattern }, { scheme: languageScheme, language: languageId }],
+			};
 
-	// Start the client. This will also launch the server
-	client.start();
+			// Create the language client and start the client.
+			client = new LanguageClient(
+				`autosupport-lsp-vscode`,
+				`Autosupport language server`,
+				serverOptions,
+				clientOptions
+			);
+
+			// Start the client. This will also launch the server
+			client.start();
+		})
+	})
 }
 
 export function deactivate(): Thenable<void> | undefined {
