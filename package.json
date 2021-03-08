@@ -1,12 +1,12 @@
 {
-	"name": "autosupport-lsp-vscode",
-	"description": "VSCode implementation of the generic language server for autosupport",
+	"name": "uld-lsp-vscode",
+	"description": "VSCode implementation of the generic language server for uld",
 	"author": "Oscar Ablinger",
 	"license": "MIT",
 	"version": "1.0.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/AblingerOscar/autosupport-lsp-vscode"
+		"url": "https://github.com/AblingerOscar/uld-lsp-vscode"
 	},
 	"publisher": "AblingerOscar",
 	"categories": [],
@@ -21,15 +21,15 @@
 	"contributes": {
 		"configuration": {
 			"type": "object",
-			"title": "Autosupport",
+			"title": "ULD",
 			"properties": {
-				"autosupport-lsp-vscode.definitionFilePath": {
+				"uld-lsp-vscode.definitionFilePath": {
 					"scope": "machine-overridable",
 					"type": "string",
 					"title": "Language Definition File path",
 					"description": "Path to language definition file for the generic language server"
 				},
-				"autosupport-lsp-vscode.languageScheme": {
+				"uld-lsp-vscode.languageScheme": {
 					"scope": "machine-overridable",
 					"type": "string",
 					"title": "Language Definition File scheme",

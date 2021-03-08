@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<languageDefinition p1:name="Cocol-2" p1:filePattern="**/*.atg" p1:version="v1.0.0" xmlns:p1="https://github.com/AblingerOscar/autosupport-definition" xmlns="https://github.com/AblingerOscar/autosupport-definition">
+<languageDefinition p1:name="Cocol-2" p1:filePattern="**/*.atg" p1:version="v1.0.0" xmlns:p1="https://github.com/AblingerOscar/uld-definition" xmlns="https://github.com/AblingerOscar/uld-definition">
   <p1:comments>
     <p1:normalComments />
     <p1:documentationComments>

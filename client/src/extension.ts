@@ -13,16 +13,16 @@ import {
 import { parseString } from 'xml2js'
 
 let client: LanguageClient;
-const extensionPath = extensions.getExtension("AblingerOscar.autosupport-lsp-vscode").extensionPath;
+const extensionPath = extensions.getExtension("AblingerOscar.uld-lsp-vscode").extensionPath;
 
 export function activate(context: ExtensionContext) {
 
 	// The server is implemented in dotnet
 	const serverExe = 'dotnet'
 	
-	const serverPath = extensionPath + '/server/autosupport-lsp-server.dll'
+	const serverPath = extensionPath + '/server/uld-lsp-server.dll'
 
-	const config = workspace.getConfiguration('autosupport-lsp-vscode')
+	const config = workspace.getConfiguration('uld-lsp-vscode')
 	const definitionFilePath: string = config.get('definitionFilePath')
 	const languageScheme: string = config.get('languageScheme')
 
@@ -49,8 +49,8 @@ export function activate(context: ExtensionContext) {
 
 			// Create the language client and start the client.
 			client = new LanguageClient(
-				`autosupport-lsp-vscode`,
-				`Autosupport language server`,
+				`uld-lsp-vscode`,
+				`uld language server`,
 				serverOptions,
 				clientOptions
 			);
